@@ -474,6 +474,8 @@ def get_station_name(s):
 		return "ＮＨＫ ＢＳプレミアム"
 	elif s == "BS4":
 		return "ＢＳ日テレ"
+	elif s == "BN2":
+		return "ＢＳ日テレ２"
 	elif s == "BS5":
 		return "ＢＳ朝日"
 	elif s == "BS6":
@@ -1150,7 +1152,7 @@ def output_html(year, month, day, area, stations):
 			if chunk == "":
 				break
 
-			if station in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
+			if station in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BN2","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
 				keysta = util.get_my_key_station(station)
 				if chunk in timetables[month][day][keysta]:
 					if not outputBrank:
@@ -1909,6 +1911,8 @@ def output_html_bs5(days):
 	outfile = open(file_path, "w")
 	outfile.write('<html><body><div class="tt_prog cf" data-type="multi">\n')
 	for d in days:
+		if d == None:
+			continue
 		if d.month < 10:
 			month = "0" + str(d.month)
 		else:
@@ -2200,11 +2204,18 @@ if __name__ == "__main__":
 			output_html(util.year, month, day, "58_KYT3", ["KYT3"])
 			output_html(util.year, month, day, "62", ["G62","E62","RBC","QAB","OTV"])
 			output_html(util.year, month, day, "bs1", ["BS1","BSp","BS4","BS5","BS6","BS7","BS8"])
-			output_html(util.year, month, day, "bs2", ["WW1","WW2","WW3","SC1","SC2","SC3","BS11","BS12","OU1"])
+			if (int)(util.year) >= 2026 or (int)(util.year) == 2025 and (int)(month) >= 2 or (int)(util.year) == 2025 and (int)(month) == 1 and (int)(day) >= 10:
+				output_html(util.year, month, day, "bs2", ["WW1","WW2","WW3","BSJ","BS11","BS12","OU1"])
+			else:
+				output_html(util.year, month, day, "bs2", ["WW1","WW2","WW3","SC1","SC2","SC3","BS11","BS12","OU1"])
+			output_html(util.year, month, day, "bs1_BS4", ["BN2"])
 			output_html(util.year, month, day, "bs1_TX", ["BT2"])
 			output_html(util.year, month, day, "bs2_ON", ["OU2"])
 			output_html(util.year, month, day, "bs3", ["GCH","BSA","SKY","JS1","JS2","JS3","JS4"])
-			output_html(util.year, month, day, "bs4", ["BSF","WW4","JMV","DCH","BST","BSJ","BSY"])
+			if (int)(util.year) >= 2026 or (int)(util.year) == 2025 and (int)(month) >= 2 or (int)(util.year) == 2025 and (int)(month) == 1 and (int)(day) >= 10:
+				output_html(util.year, month, day, "bs4", ["BSF","WW4","JMV","DCH","BST","BSY"])
+			else:
+				output_html(util.year, month, day, "bs4", ["BSF","WW4","JMV","DCH","BST","BSJ","BSY"])
 			output_html(util.year, month, day, "bs4k8k_1", ["FK1","FK4","FK5","FK6","FK7","FK8"])
 			output_html(util.year, month, day, "bs4k8k_2", ["EK1","FKW","FKC","FKS","QVC"])
 			output_html(util.year, month, day, "23_EX2", ["EX2"])
@@ -2213,6 +2224,8 @@ if __name__ == "__main__":
 			output_html(util.year, month, day, "27_CTC3", ["CTC3"])
 			output_html(util.year, month, day, "38_MTV2", ["MTV2"])
 			output_html(util.year, month, day, "42_SUN2", ["SUN2"])
+			if (int)(util.year) >= 2026 or (int)(util.year) == 2025 and (int)(month) >= 2 or (int)(util.year) == 2025 and (int)(month) == 1 and (int)(day) >= 10:
+				output_html(util.year, month, day, "bs2_BS10", ["SC1"])
 			output_html_gtv(util.year, month, day)
 			output_html_bs6_tvk2(util.year, month, day)
 			if (int)(util.year) >= 2025 or (int)(util.year) == 2024 and (int)(month) >= 5 or (int)(util.year) == 2024 and (int)(month) == 4 and (int)(day) == 30:

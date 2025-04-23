@@ -100,6 +100,7 @@ HTMLの取得方法は各自に任せます。
 | 群馬テレビ2 | `https://www.gtv.co.jp/program/schedule2.html` | `./2024/01/01/2024_01_01_27_GTV.html` |
 | 三重テレビ2 | `https://www.tvkingdom.jp/chart/38.action?head=202401010500&span=24&chartWidth=950&cellHeight=3&sticky=true&descriptive=true&buttonType=0&selectedStationId=138961` | `./2024/01/01/2024_01_01_38_MTV2.html` |
 | サンテレビ2 | `https://www.tvkingdom.jp/chart/42.action?head=202401010500&span=24&chartWidth=950&cellHeight=3&sticky=true&descriptive=true&buttonType=0&selectedStationId=143057` | `./2024/01/01/2024_01_01_42_SUN2.html` |
+| BS日テレ2 | `https://www.tvkingdom.jp/chart/bs1.action?head=202101010500&span=24&chartWidth=950&cellHeight=3&sticky=true&descriptive=true&buttonType=0&selectedStationId=200142` | `./2024/01/01/2024_01_01_bs1_BS4.html` |
 | BSテレ東2 | `https://www.tvkingdom.jp/chart/bs1.action?head=202101010500&span=24&chartWidth=950&cellHeight=3&sticky=true&descriptive=true&buttonType=0&selectedStationId=200172` | `./2024/01/01/2024_01_01_bs1_TX.html` |
 | 放送大学on | `https://www.tvkingdom.jp/chart/bs2.action?head=202401010500&span=24&chartWidth=950&cellHeight=3&sticky=true&descriptive=true&buttonType=0&selectedStationId=200232` | `./2024/01/01/2024_01_01_bs2_ON.html` |
 | BS10スターチャンネル | `https://www.tvkingdom.jp/chart/bs2.action?head=202401010500&span=24&chartWidth=950&cellHeight=3&sticky=true&descriptive=true&buttonType=0&selectedStationId=200201` | `./2024/01/01/2024_01_01_bs2_BS10.html` |
@@ -182,17 +183,6 @@ HTMLの取得方法は各自に任せます。
 | 宮崎 | `https://www.nhk.jp/timetable/450/tv/20240101/daily/all/` | `./2024/01/01/2024_01_01_NHK450.html` |
 | 鹿児島 | `https://www.nhk.jp/timetable/460/tv/20240101/daily/all/` | `./2024/01/01/2024_01_01_NHK460.html` |
 | 沖縄 | `https://www.nhk.jp/timetable/470/tv/20240101/daily/all/` | `./2024/01/01/2024_01_01_NHK470.html` |
-
-* BS日テレ(142ch)
-
-※ ラジオボタンをクリックして動的生成された結果のHTMLを得る必要があります。差分を求めるために141と142の両方を取得します。  
-※ 週間番組表なので1週間あたり1ファイルとします。ラジオボタンは「週間」と「先週」を選びましょう。  
-※ 1weekの1という数字は第何週目かを表しますが、これはpython関数 `datetime.date(2024,1,1).isocalendar()[1]` の値に従います。
-
-| チャンネル | URL | 保存先 |
-| --- | --- | --- |
-| 141ch | `https://www.bs4.jp/programschedule/` | `2024/01/2024_1week_bs141.html` |
-| 142ch | `https://www.bs4.jp/programschedule/` | `2024/01/2024_1week_bs142.html` |
 
 * BS朝日(152ch)
 

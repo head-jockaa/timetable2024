@@ -8,7 +8,6 @@ import patch
 import gtv
 import nhk_old
 import nhk
-import bs4
 import bs5
 import bs8
 
@@ -677,12 +676,7 @@ if __name__ == "__main__":
 					get_timetable_nhk(util.year, month, day, area)
 				else:
 					get_timetable_nhk_old(util.year, month, day, area)
-			get_timetable_ouj(util.year, month, day)
-			get_timetable_mxtv(util.year, month, day)
 			get_timetable_gtv(util.year, month, day)
-#			get_timetable_mietv(util.year, month, day)
-#			get_timetable_suntv(util.year, month, day)
-			get_timetable_bs4(util.year, month, day)
 			get_timetable_bs5(util.year, month, day)
 			get_timetable_bs8(util.year, month, day)
 			get_timetable_bs6(util.year, month, day)

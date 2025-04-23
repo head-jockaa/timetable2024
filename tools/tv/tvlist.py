@@ -271,7 +271,7 @@ def get_station_name_tag(s, area):
 		return "TX"
 	elif s == "とちぎテレビ":
 		return "TTV"
-	elif s == "群馬テレビ":
+	elif s == "群馬テレビ" or s == "ぐんテレ":
 		return "GTV"
 	elif s == "テレ玉":
 		return "TVS"
@@ -480,6 +480,8 @@ def get_station_name_tag(s, area):
 		return "BSp"
 	elif s == "ＢＳ日テレ":
 		return "BS4"
+	elif s == "ＢＳ日テレ２":
+		return "BN2"
 	elif s == "ＢＳ朝日":
 		return "BS5"
 	elif s == "ＢＳ-ＴＢＳ":
@@ -498,7 +500,7 @@ def get_station_name_tag(s, area):
 		return "WW3"
 	elif s == "WOWOWプラス":
 		return "WW4"
-	elif s == "スター・チャンネル" or s == "スター・チャンネル1" or s == "BS10スターチャンネル":
+	elif s == "スター・チャンネル" or s == "スター・チャンネル1" or s == "BS10スターチャンネル" or s == "ＢＳ１０スターｃｈ":
 		return "SC1"
 	elif s == "スター・チャンネル2":
 		return "SC2"
@@ -536,7 +538,7 @@ def get_station_name_tag(s, area):
 		return "BSY"
 	elif s == "BS松竹東急":
 		return "BST"
-	elif s == "BSJapanext" or s == "BS10":
+	elif s == "BSJapanext" or s == "BS10" or s == "ＢＳ１０":
 		return "BSJ"
 	elif s == "NHK BS4K" or s == "NHK BSP4K":
 		return "FK1"

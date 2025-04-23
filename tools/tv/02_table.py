@@ -8,7 +8,6 @@ import patch
 import gtv
 import nhk_old
 import nhk
-import bs4
 import bs5
 import bs8
 
@@ -67,7 +66,7 @@ def get_timetable(year, month, day, area):
 			start_time, isYesterday = tvkingdom.extractStartTime(item_part)
 
 			if start_time == "":
-				if not isFirst and not (station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29")):
+				if not isFirst and not (station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BN2","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29")):
 					# 番組情報なし
 					start_time = util.add_interval(pre_yesterday, pre_start_time, last_programs_interval)
 					# パッチあて(情報なしを埋める)
@@ -104,7 +103,7 @@ def get_timetable(year, month, day, area):
 			last_programs_interval = tvkingdom.extractInterval(start_time, item_part)
 
 			# チバテレ2などの穴埋め
-			if station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
+			if station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BN2","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
 				gap_to = start_time
 				for chunk in util.fetch_gaps(station_tag, gap_from, gap_to):
 					programs.append(chunk[:2])
@@ -177,7 +176,7 @@ def get_timetable(year, month, day, area):
 			programs.append(chunk)
 
 		# チバテレ2などの穴埋め
-		if station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
+		if station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BN2","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
 			gap_to = None
 			for chunk in util.fetch_gaps(station_tag, gap_from, gap_to):
 				programs.append(chunk[:2])
@@ -230,12 +229,12 @@ def get_timetable(year, month, day, area):
 
 		# 放映時間
 		if len(programs2) >= 1:
-			if not (station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29")):
+			if not (station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BN2","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29")):
 				programs2[-1] += ":" + str(last_programs_interval)
 			if station_tag in util.main_channels:
 				util.standard_lasttime_interval[station_tag] = last_programs_interval
 
-		if station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
+		if station_tag in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BN2","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
 			if len(programs2) !=0 and len(util.standard_programs_timeline[keysta]) != 0:
 				if len(util.fetch_gaps(station_tag, gap_from, None)) == 0:
 					programs2[-1] += ":" + str(last_programs_interval)
@@ -1276,10 +1275,26 @@ def get_timetable_bs8(year, month, day):
 			bar = create_diff("BF2", one["time"], types, name_id, chapter_id, one["code"], splited_by_space, desc_id)
 			programs.append(bar)
 
-	# チャンネル1の番組を埋める
-	gap_to = None
-	for chunk in util.fetch_gaps("BF2", gap_from, gap_to):
-		programs.append(chunk[:2])
+	# パッチ当て(追加)(仮)
+	# 最後のMUSICSだけで使う
+	last_program_from = util.add_interval(False,result1[-1]["start"],result1[-1]["interval"])
+	add_time, add_code, add_title_with_icon, add_desc, add_interval = patch.pad("BF2", last_program_from)
+	if add_time != None:
+		# チャンネル1の番組を埋める
+		for chunk in util.fetch_gaps("BF2", gap_from, last_program_from):
+			programs.append(chunk[:2])
+		add_types, add_title_string = tvkingdom.extractIconsFromTitle(add_title_with_icon)
+		add_title_name, add_chapter_name, splited_by_space = util.split_title_chapter(add_title_string, "BF2", year, month)
+		add_name_id, add_chapter_id = get_title_id(add_title_name, add_chapter_name)
+		add_desc_id = get_description_id(add_desc)
+		last_programs_interval = add_interval
+		bar = create_diff("BF2", add_time, add_types, add_name_id, add_chapter_id, add_code, splited_by_space, add_desc_id)
+		programs.append(bar)
+		gap_from = util.add_interval(False, add_time, add_interval)
+	else:
+		# チャンネル1の番組を埋める
+		for chunk in util.fetch_gaps("BF2", gap_from, None):
+			programs.append(chunk[:2])
 
 	# 連続する「フォーマット2」の間をハイフンで省略
 	programs2 = []
@@ -1673,14 +1688,14 @@ if __name__ == "__main__":
 						outfile.write(program)
 					outfile.write("\"")
 			# BS日テレ
-			station = get_timetable_bs4(util.year, month, day)
-			if not isFirstStation:
-				outfile.write(",\r\n")
-			isFirstStation = False
-			outfile.write(station["name"] + ":\"")
-			for program in station["programs"]:
-				outfile.write(program)
-			outfile.write("\"")
+#			station = get_timetable_bs4(util.year, month, day)
+#			if not isFirstStation:
+#				outfile.write(",\r\n")
+#			isFirstStation = False
+#			outfile.write(station["name"] + ":\"")
+#			for program in station["programs"]:
+#				outfile.write(program)
+#			outfile.write("\"")
 			# BS朝日
 			station = get_timetable_bs5(util.year, month, day)
 			if not isFirstStation:
