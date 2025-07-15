@@ -1154,7 +1154,18 @@ def output_html(year, month, day, area, stations):
 
 			if station in ["EX2","CTC2","CTC3","MTV2","SUN2","ABS2","TSK2","KYT3","BN2","BT2","OU2"] and (year >= "2022" or month >= "10" or month == "09" and day >= "29"):
 				keysta = util.get_my_key_station(station)
+				same = False
 				if chunk in timetables[month][day][keysta]:
+					# メインチャンネルと同時放送
+					same = True
+					idx1 = timetables[month][day][keysta].index(chunk)
+					idx2 = timetables[month][day][station].index(chunk)
+					if idx1 < len(timetables[month][day][keysta])-1 and idx2 < len(timetables[month][day][station])-1:
+						if timetables[month][day][keysta][idx1+1][:2] != timetables[month][day][station][idx2+1][:2]:
+							# ただし終了時間が異なる場合
+							same = False
+				if same:
+					# メインチャンネルとの同時放送は省略される
 					if not outputBrank:
 						outfile.write('  <div class="cell-schedule" style="height: 0px;">番組情報がありません</div>\n')
 						outputBrank = True

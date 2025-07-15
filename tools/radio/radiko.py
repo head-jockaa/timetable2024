@@ -47,61 +47,75 @@ def extractDescription(html):
 
 # extractTitleWithIconsの返した文字列を与える
 def extractIconsFromTitle(title_string):
+	type_new = False
+	type_re = False
+	type_end = False
 	types = ""
 	if "【新番組】" in title_string:
-		types += "N"
+		type_new = True
 		title_string = title_string.replace("【新番組】","")
 	if "【新】" in title_string:
-		types += "N"
+		type_new = True
 		title_string = title_string.replace("【新】","")
 	if "［新］" in title_string:
-		types += "N"
+		type_new = True
 		title_string = title_string.replace("［新］","")
 	if "≪新≫" in title_string:
-		types += "N"
+		type_new = True
 		title_string = title_string.replace("≪新≫","")
 	if "(新)" in title_string:
-		types += "N"
+		type_new = True
 		title_string = title_string.replace("(新)","")
+
 	if "【最終回】" in title_string:
-		types += "F"
+		type_end = True
 		title_string = title_string.replace("【最終回】","")
 	if "【終】" in title_string:
-		types += "F"
+		type_end = True
 		title_string = title_string.replace("【終】","")
 	if "［終］" in title_string:
-		types += "F"
+		type_end = True
 		title_string = title_string.replace("［終］","")
 	if "《終》" in title_string:
-		types += "F"
+		type_end = True
 		title_string = title_string.replace("《終》","")
 	if "(終)" in title_string:
-		types += "F"
+		type_end = True
 		title_string = title_string.replace("(終)","")
+
 	if "【再放送】" in title_string:
-		types += "R"
+		type_re = True
 		title_string = title_string.replace("【再放送】","")
 	if "[再放送]" in title_string:
-		types += "R"
+		type_re = True
 		title_string = title_string.replace("[再放送]","")
 	if "(再放送)" in title_string:
-		types += "R"
+		type_re = True
 		title_string = title_string.replace("(再放送)","")
 	if "［再］" in title_string:
-		types += "R"
+		type_re = True
 		title_string = title_string.replace("［再］","")
 	if "[再]" in title_string:
-		types += "R"
+		type_re = True
 		title_string = title_string.replace("[再]","")
 	if "(再)" in title_string:
-		types += "R"
+		type_re = True
 		title_string = title_string.replace("(再)","")
 	if "(再放送)" in title_string:
-		types += "R"
+		type_re = True
 		title_string = title_string.replace("(再放送)","")
 	if "(再・終)" in title_string:
-		types += "RF"
+		type_re = True
+		type_end = True
 		title_string = title_string.replace("(再・終)","")
+
+	if type_new:
+		types += "N"
+	if type_re:
+		types += "R"
+	if type_end:
+		types += "F"
+
 	#以下SBSのみ
 	if "(特)" in title_string:
 		types += "S"

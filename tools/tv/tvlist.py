@@ -536,7 +536,7 @@ def get_station_name_tag(s, area):
 		return "DCH"
 	elif s == "BSよしもと":
 		return "BSY"
-	elif s == "BS松竹東急":
+	elif s == "BS松竹東急" or s == "J:COM BS":
 		return "BST"
 	elif s == "BSJapanext" or s == "BS10" or s == "ＢＳ１０":
 		return "BSJ"
